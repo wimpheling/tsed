@@ -1,5 +1,4 @@
-import KoaRouter from "@koa/router";
-import {RouterOptions as KoaRouterOptions} from "@koa/router";
+import KoaRouter, {RouterOptions as KoaRouterOptions} from "@koa/router";
 
 import {
   PLATFORM_ROUTER_OPTIONS,
@@ -49,10 +48,6 @@ export class PlatformKoaRouter extends PlatformRouter<KoaRouter> {
     this.rawRouter = new KoaRouter(options) as any;
   }
 
-  callback() {
-    return [this.getRouter().routes(), this.getRouter().allowedMethods()];
-  }
-
   multer(options: PlatformMulterSettings): PlatformMulter {
     return getMulter(options);
   }
@@ -61,5 +56,9 @@ export class PlatformKoaRouter extends PlatformRouter<KoaRouter> {
     this.rawRouter.use(path, staticsMiddleware(options) as any);
 
     return this;
+  }
+
+  protected bind(): any {
+    return [this.getRouter().routes(), this.getRouter().allowedMethods()];
   }
 }

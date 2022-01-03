@@ -106,22 +106,6 @@ export class PlatformExpress implements PlatformAdapter<Express.Application, Exp
     });
   }
 
-  useContext(): this {
-    const {logger, app, injector} = this.platform;
-
-    logger.debug("Mount app context");
-
-    const invoke = createContext(injector);
-
-    app.getApp().use(async (request: any, response: any, next: any) => {
-      await invoke({request, response});
-
-      return next();
-    });
-
-    return this;
-  }
-
   private async configureViewsEngine() {
     const {settings, injector, app} = this.platform;
     try {

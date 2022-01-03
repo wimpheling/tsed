@@ -73,7 +73,7 @@ export class PlatformKoa implements PlatformAdapter<Koa, KoaRouter> {
     const {injector, app} = this.platform;
 
     const listener: any = (error: any, ctx: Koa.Context) => {
-      injector.get<PlatformExceptions>(PlatformExceptions)?.catch(error, ctx.request.$ctx);
+      injector.get<PlatformExceptions>(PlatformExceptions)?.catch(error, (ctx.request.req as any).ctx);
     };
 
     app.getApp().silent = true;
@@ -87,22 +87,22 @@ export class PlatformKoa implements PlatformAdapter<Koa, KoaRouter> {
     return this;
   }
 
-  useContext(): this {
-    const {injector, app, logger} = this.platform;
-    logger.info("Mount app context");
-
-    const invoke = createContext(injector);
-
-    app.getApp().use(async (ctx: Context, next: Next) => {
-      await invoke({
-        request: ctx.request as any,
-        response: ctx.response as any,
-        ctx
-      });
-
-      return next();
-    });
-
-    return this;
-  }
+  // useContext(): this {
+  //   const {injector, app, logger} = this.platform;
+  //   logger.info("Mount app context");
+  //
+  //   const invoke = createContext(injector);
+  //
+  //   app.getApp().use(async (ctx: Context, next: Next) => {
+  //     await invoke({
+  //       request: ctx.request as any,
+  //       response: ctx.response as any,
+  //       ctx
+  //     });
+  //
+  //     return next();
+  //   });
+  //
+  //   return this;
+  // }
 }

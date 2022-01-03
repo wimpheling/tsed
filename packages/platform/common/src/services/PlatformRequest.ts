@@ -21,7 +21,7 @@ declare global {
 @Injectable()
 @Scope(ProviderScope.INSTANCE)
 export class PlatformRequest<T extends {[key: string]: any} = any> {
-  public raw: T;
+  public raw: IncomingMessage;
 
   /**
    * The current @@PlatformResponse@@.
@@ -33,7 +33,7 @@ export class PlatformRequest<T extends {[key: string]: any} = any> {
   }
 
   get secure(): boolean {
-    return this.raw.secure;
+    return this.getRequest().secure;
   }
 
   get host(): string {
@@ -41,7 +41,7 @@ export class PlatformRequest<T extends {[key: string]: any} = any> {
   }
 
   get protocol(): string {
-    return this.raw.protocol;
+    return this.getRequest().protocol;
   }
 
   /**
@@ -50,14 +50,14 @@ export class PlatformRequest<T extends {[key: string]: any} = any> {
    * Is equivalent of `express.response.originalUrl || express.response.url`.
    */
   get url(): string {
-    return this.raw.originalUrl || this.raw.url;
+    return this.getRequest().originalUrl || this.raw.url;
   }
 
-  get headers(): IncomingHttpHeaders {
+  get headers() {
     return this.raw.headers;
   }
 
-  get method(): string {
+  get method() {
     return this.raw.method;
   }
 
@@ -66,11 +66,11 @@ export class PlatformRequest<T extends {[key: string]: any} = any> {
    * `body-parsing` middleware such as `express.json()` or `express.urlencoded()`.
    */
   get body(): any {
-    return this.raw.body;
+    return this.getRequest().body;
   }
 
   get rawBody(): any {
-    return this.raw.rawBody || this.raw.body;
+    return this.getRequest().rawBody || this.body;
   }
 
   /**
@@ -78,7 +78,7 @@ export class PlatformRequest<T extends {[key: string]: any} = any> {
    * If the request contains no cookies, it defaults to `{}`.
    */
   get cookies(): {[key: string]: any} {
-    return this.raw.cookies;
+    return this.getRequest().cookies;
   }
 
   /**
@@ -87,7 +87,7 @@ export class PlatformRequest<T extends {[key: string]: any} = any> {
    * This object defaults to `{}`.
    */
   get params(): {[key: string]: any} {
-    return this.raw.params;
+    return this.getRequest().params;
   }
 
   /**
@@ -95,7 +95,7 @@ export class PlatformRequest<T extends {[key: string]: any} = any> {
    * When query parser is set to disabled, it is an empty object `{}`, otherwise it is the result of the configured query parser.
    */
   get query(): {[key: string]: any} {
-    return this.raw.query;
+    return this.getRequest().query;
   }
 
   /**
@@ -103,11 +103,11 @@ export class PlatformRequest<T extends {[key: string]: any} = any> {
    * It require to install a middleware like express-session to work.
    */
   get session(): {[key: string]: any} {
-    return this.raw.session as any;
+    return this.getRequest().session as any;
   }
 
   get files() {
-    return this.raw.files;
+    return this.getRequest().files;
   }
 
   /**
@@ -134,7 +134,7 @@ export class PlatformRequest<T extends {[key: string]: any} = any> {
    * @param name
    */
   get(name: string) {
-    return this.raw.get(name);
+    return this.getRequest().get(name);
   }
 
   /**
@@ -145,12 +145,10 @@ export class PlatformRequest<T extends {[key: string]: any} = any> {
    * @param mime
    */
   accepts(mime: string): string | false;
-
   accepts(mime: string[]): string[] | false;
-
   accepts(mime?: string | string[]): string | string[] | false {
     // @ts-ignore
-    return this.raw.accepts(mime);
+    return this.getRequest().accepts(mime);
   }
 
   isAborted() {

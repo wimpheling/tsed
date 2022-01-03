@@ -52,7 +52,7 @@ export class PlatformRouter<Router = TsED.Router> {
     return createFakeRawDriver();
   }
 
-  callback(): any {
+  protected bind(): any {
     return this.raw;
   }
 
@@ -144,7 +144,7 @@ export class PlatformRouter<Router = TsED.Router> {
       }
 
       if (handler instanceof PlatformRouter) {
-        return list.concat(handler.callback());
+        return list.concat(handler.bind());
       }
 
       return list.concat(

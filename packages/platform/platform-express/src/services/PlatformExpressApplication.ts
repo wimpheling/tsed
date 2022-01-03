@@ -1,7 +1,8 @@
-import {Configuration, createContext, Inject, PlatformApplication, PlatformHandler} from "@tsed/common";
+import {Configuration, createCallback, createContext, Inject, PlatformApplication, PlatformHandler} from "@tsed/common";
 import Express from "express";
 import {PlatformExpressStaticsOptions} from "../interfaces/PlatformExpressStaticsOptions";
 import {PlatformExpressRouter} from "./PlatformExpressRouter";
+import {IncomingMessage, ServerResponse} from "http";
 
 declare global {
   namespace TsED {
@@ -32,7 +33,7 @@ export class PlatformExpressApplication extends PlatformExpressRouter implements
     return this.rawApp;
   }
 
-  callback() {
-    return this.rawApp;
+  callback(): (req: IncomingMessage, res: ServerResponse) => Promise<void> {
+    return createCallback(this.injector, this.rawApp);
   }
 }

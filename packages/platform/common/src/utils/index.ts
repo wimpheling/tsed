@@ -5,4 +5,5 @@ export * from "./loadInjector";
 export * from "./printRoutes";
 export * from "./listenServer";
 export * from "./createContext";
+export * from "./createCallback";
 export * from "./useCtxHandler";

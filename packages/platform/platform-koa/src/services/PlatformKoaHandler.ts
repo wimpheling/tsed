@@ -16,14 +16,16 @@ export class PlatformKoaHandler extends PlatformHandler {
   protected createRawHandler(metadata: HandlerMetadata) {
     if (OVERRIDE_TYPES.includes(metadata.type)) {
       const handler = this.compileHandler(metadata);
-      return async (ctx: Koa.Context, next: Koa.Next) => handler({next, $ctx: ctx.request.$ctx});
+      return async (ctx: Koa.Context, next: Koa.Next) => handler({next, koaCtx: ctx, $ctx: (ctx.request.req as any).ctx});
     }
 
     return super.createRawHandler(metadata);
   }
 
   protected async onRequest(requestOptions: OnRequestOptions): Promise<any> {
-    const {metadata, $ctx} = requestOptions;
+    const {metadata, $ctx, koaCtx} = requestOptions;
+    ($ctx.request as any).ctx = koaCtx;
+    ($ctx.response as any).ctx = koaCtx;
 
     if ($ctx.data instanceof Error) {
       if (metadata.hasErrorParam) {

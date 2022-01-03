@@ -149,6 +149,10 @@ export class PlatformTest extends DITest {
       getHeaders() {
         return this.headers;
       },
+      setHeader(key: string, value: any) {
+        this.headers[key.toLowerCase()] = value;
+        return this;
+      },
       set(key: string, value: any) {
         this.headers[key.toLowerCase()] = value;
         return this;

@@ -32,7 +32,7 @@ export class PlatformResponse<T extends Record<string, any> = any> {
 
   data: any;
 
-  raw: T;
+  raw: ServerResponse;
 
   constructor({response}: IncomingEvent, protected $ctx: PlatformContext) {
     this.raw = response as any;
@@ -51,7 +51,7 @@ export class PlatformResponse<T extends Record<string, any> = any> {
    * This property is useful for exposing request-level information such as the request path name, authenticated user, user settings, and so on.
    */
   get locals() {
-    return this.raw.locals;
+    return this.getResponse().locals;
   }
 
   /**
@@ -82,11 +82,11 @@ export class PlatformResponse<T extends Record<string, any> = any> {
    * @param name
    */
   get(name: string) {
-    return this.raw.get(name);
+    return this.getResponse().get(name);
   }
 
   getHeaders(): Record<string, HeaderValue> {
-    return this.raw.getHeaders();
+    return this.getResponse().getHeaders();
   }
 
   /**
@@ -113,7 +113,7 @@ export class PlatformResponse<T extends Record<string, any> = any> {
    * @param status
    */
   status(status: number) {
-    this.raw.status(status);
+    this.getResponse().status(status);
 
     return this;
   }
@@ -143,7 +143,7 @@ export class PlatformResponse<T extends Record<string, any> = any> {
       return this.location(String(item));
     }
 
-    this.raw.set(key, item);
+    this.getResponse().set(key, item);
 
     return this;
   }
@@ -161,7 +161,7 @@ export class PlatformResponse<T extends Record<string, any> = any> {
    *     res.type('png');
    */
   contentType(contentType: string) {
-    this.raw.contentType(contentType);
+    this.getResponse().contentType(contentType);
 
     return this;
   }
@@ -197,7 +197,7 @@ export class PlatformResponse<T extends Record<string, any> = any> {
    * @param filename
    */
   attachment(filename: string) {
-    this.raw.attachment(filename);
+    this.getResponse().attachment(filename);
     return this;
   }
 
@@ -209,7 +209,7 @@ export class PlatformResponse<T extends Record<string, any> = any> {
    * @param url
    */
   redirect(status: number, url: string) {
-    this.raw.redirect(status, url);
+    this.getResponse().redirect(status, url);
 
     return this;
   }
@@ -220,7 +220,7 @@ export class PlatformResponse<T extends Record<string, any> = any> {
    * @param location
    */
   location(location: string) {
-    this.raw.location(location);
+    this.getResponse().location(location);
 
     return this;
   }
@@ -263,7 +263,7 @@ export class PlatformResponse<T extends Record<string, any> = any> {
   body(data: any) {
     this.data = data;
     if (data === undefined) {
-      this.raw.send();
+      this.getResponse().send();
 
       return this;
     }
@@ -280,18 +280,18 @@ export class PlatformResponse<T extends Record<string, any> = any> {
       }
 
       this.contentLength(data.length);
-      this.raw.send(data);
+      this.getResponse().send(data);
 
       return this;
     }
 
     if (isBoolean(data) || isNumber(data) || isString(data) || data === null) {
-      this.raw.send(data);
+      this.getResponse().send(data);
 
       return this;
     }
 
-    this.raw.json(data);
+    this.getResponse().json(data);
 
     return this;
   }

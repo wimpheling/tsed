@@ -125,8 +125,8 @@ export class PlatformBuilder<App = TsED.Application, Router = TsED.Router> {
     return this.build<App, Router>(module, settings).bootstrap();
   }
 
-  callback(): (req: IncomingMessage, res: ServerResponse) => void;
-  callback(req: IncomingMessage, res: ServerResponse): void;
+  callback(): (req: IncomingMessage, res: ServerResponse) => Promise<void>;
+  callback(req: IncomingMessage, res: ServerResponse): Promise<void>;
   callback(req?: IncomingMessage, res?: ServerResponse) {
     if (req && res) {
       return this.app.callback()(req, res);

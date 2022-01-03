@@ -1,7 +1,9 @@
 import {Injectable, ProviderScope} from "@tsed/di";
+import {IncomingMessage, ServerResponse} from "http";
 import {createFakeRawDriver} from "./FakeRawDriver";
 import {PlatformHandler} from "./PlatformHandler";
 import {PlatformRouter} from "./PlatformRouter";
+import {createCallback} from "../utils/createCallback";
 
 declare global {
   namespace TsED {
@@ -34,5 +36,9 @@ export class PlatformApplication<App = TsED.Application, Router = TsED.Router> e
 
   getApp(): App {
     return this.raw;
+  }
+
+  callback(): (req: IncomingMessage, res: ServerResponse) => Promise<void> {
+    return createCallback(this.injector, this.raw as any);
   }
 }

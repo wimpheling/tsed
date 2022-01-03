@@ -23,6 +23,7 @@ export class PlatformExpressHandler extends PlatformHandler {
     try {
       return await super.onCtxRequest(requestOptions);
     } catch (er) {
+      console.log(er);
       return this.onError(er, requestOptions);
     }
   }

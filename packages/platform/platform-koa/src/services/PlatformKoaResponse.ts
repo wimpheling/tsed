@@ -1,5 +1,4 @@
 import {IncomingEvent, PlatformContext, PlatformResponse} from "@tsed/common";
-import {ServerResponse} from "http";
 import Koa from "koa";
 import {getStatusMessage} from "@tsed/schema";
 
@@ -16,26 +15,14 @@ declare global {
  * @koa
  */
 export class PlatformKoaResponse extends PlatformResponse<Koa.Response> {
-  #ctx: Koa.Context;
+  ctx: Koa.Context;
 
   constructor(event: IncomingEvent, $ctx: PlatformContext) {
     super(event, $ctx);
-    this.#ctx = this.raw.ctx;
-  }
-
-  get statusCode() {
-    return this.raw.status;
   }
 
   get locals() {
-    return this.#ctx.state;
-  }
-
-  /**
-   * Return the Node.js response object
-   */
-  getRes(): ServerResponse {
-    return this.raw.res;
+    return this.ctx.state;
   }
 
   hasStatus() {
@@ -49,7 +36,7 @@ export class PlatformKoaResponse extends PlatformResponse<Koa.Response> {
    * @param status
    */
   status(status: number) {
-    this.raw.status = status;
+    this.getResponse().status = status;
 
     return this;
   }
@@ -67,13 +54,13 @@ export class PlatformKoaResponse extends PlatformResponse<Koa.Response> {
    *     res.type('png');
    */
   contentType(contentType: string) {
-    this.raw.type = contentType;
+    this.getResponse().type = contentType;
 
     return this;
   }
 
   getHeaders() {
-    return this.raw.headers;
+    return this.getResponse().headers;
   }
 
   /**
@@ -85,23 +72,23 @@ export class PlatformKoaResponse extends PlatformResponse<Koa.Response> {
    * @param data
    */
   body(data: any): this {
-    this.raw.body = data;
+    this.getResponse().body = data;
 
     return this;
   }
 
   getBody() {
-    return this.raw.body;
+    return this.getResponse().body;
   }
 
   redirect(status: number, url: string): this {
     status = status || 302;
     // Set location header
-    url = this.location(url).raw.get("Location");
+    url = this.location(url).get("Location");
 
     this.body(`${getStatusMessage(status)}. Redirecting to ${url}`);
     this.status(status);
-    this.setHeader("Content-Length", Buffer.byteLength(this.raw.body));
+    this.setHeader("Content-Length", Buffer.byteLength(this.getResponse().body));
 
     if (this.request.method === "HEAD") {
       this.getRes().end();
@@ -119,7 +106,7 @@ export class PlatformKoaResponse extends PlatformResponse<Koa.Response> {
     }
 
     // set location
-    this.raw.set("Location", encodeUrl(location));
+    this.getResponse().set("Location", encodeUrl(location));
 
     return this;
   }

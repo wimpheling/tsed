@@ -75,7 +75,7 @@ export class PlatformContext extends DIContext implements ContextMethods {
     this.container.set(PlatformRequest, this.request);
     this.container.set(PlatformContext, this);
 
-    this.response.setHeader("x-request-id", this.id);
+    event.response?.setHeader("x-request-id", this.id);
   }
 
   get url() {

@@ -1,7 +1,8 @@
 import KoaRouter from "@koa/router";
-import {Configuration, Inject, PlatformApplication, PlatformHandler} from "@tsed/common";
+import {Configuration, createCallback, createContext, Inject, PlatformApplication, PlatformHandler} from "@tsed/common";
 import Koa from "koa";
 import {PlatformKoaRouter} from "./PlatformKoaRouter";
+import {IncomingMessage, ServerResponse} from "http";
 
 const koaQs = require("koa-qs");
 
@@ -30,7 +31,7 @@ export class PlatformKoaApplication extends PlatformKoaRouter implements Platfor
     return this.rawApp;
   }
 
-  callback(): any {
-    return this.getApp().callback();
+  callback() {
+    return createCallback(this.injector, this.getApp().callback());
   }
 }
