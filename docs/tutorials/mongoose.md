@@ -178,7 +178,7 @@ The same rules for Circular References apply (**See above**);
 This works by having a field with the referenced object model's name and a field with the referenced field.
 
 <Tabs class="-code">
-  <Tabs label="Example">
+  <Tab label="Example">
 
 <<< @/tutorials/snippets/mongoose/dynamic-references.ts
 

@@ -10,9 +10,9 @@ gettingStartedText: Getting started
 gettingStartedUrl: /getting-started/
 messengerText: Discussions
 messengerIcon: bxl-slack
-messengerUrl: https://api.tsed.io/rest/slack/tsedio/tsed
+messengerUrl: /pricing.html
 sponsorText: Sponsor @romakita
-sponsorUrl: https://github.com/sponsors/Romakita
+sponsorUrl: /sponsor.html
 features:
   - title: Rest API
     icon: bx-server
@@ -41,37 +41,6 @@ contributors:
   badge:
     width: 45
     bgColor: white
-backers:
-  cta:
-    label: Become backer
-    url: https://opencollective.com/tsed#backers
-sponsors:
-  classes:
-  title: Support us
-  description: Ts.ED is under MIT-license and is an open-source project. Many thanks to our sponsors, partners and backers who contribute to promote and support our project!
-  cta:
-    label: Become sponsor
-    url: /support.html
-  items:
-    - title: Premium sponsors
-      class: w-1/2 sm:w-1/6 px-5 py-3
-      style:
-        maxHeight: 150px
-      items:
-        - title: Zenika
-          href: https://www.zenika.com
-          src: https://zenika-website.cdn.prismic.io/zenika-website/4e73b102-9045-4cff-b098-a0625f7d10f8_logo_light.svg
-        - title: Weseek
-          href: https://weseek.co.jp/
-          src: https://avatars.githubusercontent.com/u/6468105?v=4
-    - title: Partners
-      class: w-1/3 sm:w-1/6 px-5 py-3
-      style:
-        maxHeight: 90px
-      items:
-        - title: schnell.digital
-          href: https://schnell.digital/
-          src: /partners/schnell.svg
 showContent: false
 frameworks:
   - title: TypeScript
@@ -173,8 +142,11 @@ frameworks:
 ---
 
 ::: slot hero-brand
+
+<div>
 <span class="block sm:inline mb-10 sm:mb-0 sm:text-bold text-7xl sm:text-5xl font-medium"><span class="text-blue">Ts</span>.ED</span> Framework<br/>
 <small>for <a class="text-darker-gray">Node.js</a> and <a class="text-darker-gray">TypeScript</a></small>
+</div>
 :::
 
 ::: slot hero-slogan
@@ -186,7 +158,8 @@ Build your awesome server-side **application.** <WordsSlider>#Decorators, #Rest 
 :::
 
 ::: slot testimonial-title
-Why <span class="text-blue">Ts</span>.ED?
+
+<div>Why <span class="text-blue">Ts</span>.ED?</div>
 :::
 
 ::: slot testimonial-content
