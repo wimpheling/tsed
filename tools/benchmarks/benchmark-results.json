@@ -1,0 +1,44 @@
+[
+  {"name": "connect", "version": "3.7.0", "requests": "93081.6", "latency": "10.77", "throughput": "16.60"},
+  {"name": "micro", "version": "9.3.4", "requests": "91648.0", "latency": "11.01", "throughput": "16.34"},
+  {"name": "connect-router", "version": "1.3.7", "hasRouter": true, "requests": "90854.4", "latency": "11.11", "throughput": "16.20"},
+  {"name": "micro-route", "version": "2.5.0", "hasRouter": true, "requests": "86720.0", "latency": "11.65", "throughput": "15.47"},
+  {"name": "fastify", "version": "3.29.0", "hasRouter": true, "requests": "84147.2", "latency": "11.88", "throughput": "15.00"},
+  {"name": "koa", "version": "2.13.4", "requests": "77619.2", "latency": "13.32", "throughput": "13.85"},
+  {"name": "nest-fastify", "version": "8.4.3", "hasRouter": true, "requests": "75145.6", "latency": "12.81", "throughput": "12.61"},
+  {
+    "name": "koa-isomorphic-router",
+    "version": "1.0.1",
+    "hasRouter": true,
+    "requests": "70848.0",
+    "latency": "14.08",
+    "throughput": "12.64"
+  },
+  {"name": "koa-router", "version": "10.1.1", "hasRouter": true, "requests": "69324.8", "latency": "14.68", "throughput": "12.36"},
+  {"name": "restify", "version": "8.6.1", "hasRouter": true, "requests": "67004.8", "latency": "14.73", "throughput": "12.08"},
+  {"name": "microrouter", "version": "3.1.3", "hasRouter": true, "requests": "57475.2", "latency": "17.12", "throughput": "10.25"},
+  {"name": "hapi", "version": "20.2.2", "hasRouter": true, "requests": "50534.4", "latency": "19.26", "throughput": "9.02"},
+  {"name": "express", "version": "4.18.1", "hasRouter": true, "requests": "20784.0", "latency": "48.98", "throughput": "3.71"},
+  {"name": "nest", "version": "8.4.3", "hasRouter": true, "requests": "19212.8", "latency": "54.05", "throughput": "4.38"},
+  {"name": "express-route-prefix", "version": "4.18.1", "hasRouter": true, "requests": "18840.8", "latency": "52.59", "throughput": "6.97"},
+  {
+    "name": "express-with-middlewares",
+    "version": "4.18.1",
+    "hasRouter": true,
+    "requests": "17724.8",
+    "latency": "57.96",
+    "throughput": "6.59"
+  },
+  {"name": "tsed-koa", "version": "6.114.17", "hasRouter": true, "requests": "16972.8", "latency": "60.24", "throughput": "3.30"},
+  {"name": "fastify-big-json", "version": "3.29.0", "hasRouter": true, "requests": "13408.8", "latency": "73.67", "throughput": "154.30"},
+  {"name": "tsed-express", "version": "6.114.17", "hasRouter": true, "requests": "11788.8", "latency": "87.82", "throughput": "2.16"},
+  {
+    "name": "tsed-express-crypto-uuid",
+    "version": "6.114.17",
+    "hasRouter": true,
+    "requests": "11704.0",
+    "latency": "88.13",
+    "throughput": "2.53"
+  },
+  {"name": "tsed-express-uuid", "version": "6.114.17", "hasRouter": true, "requests": "11478.4", "latency": "88.04", "throughput": "2.44"}
+]

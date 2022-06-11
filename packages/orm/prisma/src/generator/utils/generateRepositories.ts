@@ -5,7 +5,7 @@ import path from "path";
 import {DmmfModel} from "../domain/DmmfModel";
 import {generateOutputsBarrelFile} from "./generateOutputsBarrelFile";
 import pluralize from "pluralize";
-import {pascalCase, camelCase} from "change-case";
+import changeCase from "change-case";
 
 interface MethodOptions {
   repository: ClassDeclaration;
@@ -23,7 +23,7 @@ function addDelegatedMethod({name, hasQuestionToken, repository, model, returnTy
     parameters: [
       {
         name: "args",
-        type: `Prisma.${model}${pascalCase(name)}Args`,
+        type: `Prisma.${model}${changeCase.pascalCase(name)}Args`,
         hasQuestionToken
       }
     ]
@@ -45,7 +45,7 @@ export function generateRepositories(dmmf: DMMF.Document, project: Project, base
   const repositoriesIndex = repoDirectory.createSourceFile(`index.ts`, undefined, {overwrite: true});
 
   const exportedModels = models.map((model) => {
-    const name = pascalCase(`${pluralize(model.name)}Repository`);
+    const name = changeCase.pascalCase(`${pluralize(model.name)}Repository`);
     const modelName = model.toString();
     const sourceFile = repoDirectory.createSourceFile(`${name}.ts`, undefined, {overwrite: true});
 
@@ -103,7 +103,7 @@ export function generateRepositories(dmmf: DMMF.Document, project: Project, base
       .addGetAccessor({
         name: "collection"
       })
-      .setBodyText(`return this.prisma.${camelCase(model.name)}`);
+      .setBodyText(`return this.prisma.${changeCase.camelCase(model.name)}`);
 
     repository
       .addGetAccessor({
@@ -191,7 +191,7 @@ export function generateRepositories(dmmf: DMMF.Document, project: Project, base
     addDelegatedMethod({
       repository,
       name: "aggregate",
-      model: pascalCase(model.name)
+      model: changeCase.pascalCase(model.name)
     });
 
     return name;

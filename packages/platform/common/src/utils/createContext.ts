@@ -16,25 +16,30 @@ export function createContext(injector: InjectorService) {
   const ResponseKlass = injector.getProvider(PlatformResponse)?.useClass;
   const RequestKlass = injector.getProvider(PlatformRequest)?.useClass;
   const {reqIdBuilder = defaultReqIdBuilder, ...loggerOptions} = injector.settings.logger;
+  const disableContext = injector.settings.get("$$disableContext");
+  const disableEvents = injector.settings.get("$$disableEvents");
 
-  return async (event: IncomingEvent): Promise<PlatformContext> => {
-    const ctx = new PlatformContext({
-      event,
-      id: reqIdBuilder(event.request),
-      logger: injector.logger,
-      ...loggerOptions,
-      injector,
-      ResponseKlass,
-      RequestKlass
-    });
+  return async (event: IncomingEvent): Promise<PlatformContext | undefined> => {
+    if (!disableContext) {
+      const ctx = new PlatformContext({
+        event,
+        id: reqIdBuilder(event.request),
+        logger: injector.logger,
+        ...loggerOptions,
+        injector,
+        ResponseKlass,
+        RequestKlass
+      });
 
-    ctx.response.onEnd(async () => {
-      await ctx.emit("$onResponse", ctx);
-      await ctx.destroy();
-    });
+      if (!disableEvents) {
+        ctx.response.onEnd(async () => {
+          await ctx.emit("$onResponse", ctx);
+          await ctx.destroy();
+        });
 
-    await ctx.emit("$onRequest", ctx);
-
-    return ctx;
+        await ctx.emit("$onRequest", ctx);
+      }
+      return ctx;
+    }
   };
 }
